@@ -4,9 +4,6 @@ import edu.xjtu.slst.bme.utils.BaseThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class App {
     private static final String[] XMLFolder = {
@@ -18,18 +15,11 @@ public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
 
     public static void main(String[] args) {
-        List<BaseThread> baseThreadList = new ArrayList<>();
-        for (String FILE_ROOT_DIR : XMLFolder) {
-            BaseThread baseThread = new BaseThread(FILE_ROOT_DIR);
-            baseThreadList.add(baseThread);
-            baseThread.run();
-        }
+        BaseThread baseThread = new BaseThread();
 
-        try {
-            for (BaseThread baseThread : baseThreadList)
-                baseThread.close();
-        } catch (IOException e) {
-            logger.error(e.toString());
+        for (String FILE_ROOT_DIR : XMLFolder) {
+            baseThread.setFileRootDir(FILE_ROOT_DIR);
+            baseThread.run();
         }
 
     }
