@@ -1,9 +1,6 @@
 package edu.xjtu.slst.bme;
 
 import edu.xjtu.slst.bme.utils.BaseThread;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 
 public class App {
     private static final String[] XMLFolder = {
@@ -12,13 +9,14 @@ public class App {
             "E:\\HadoopServer\\AllBaby\\11015",
             "E:\\HadoopServer\\AllBaby\\15520"
     };
-    private static final Logger logger = LogManager.getLogger(App.class);
+    private static final String csvFullPath = "E:\\HadoopServer\\AllBaby\\test.csv";
 
     public static void main(String[] args) {
         BaseThread baseThread = new BaseThread();
+        BaseThread.setCsvFileDir(csvFullPath);
 
         for (String FILE_ROOT_DIR : XMLFolder) {
-            baseThread.setFileRootDir(FILE_ROOT_DIR);
+            BaseThread.setFileRootDir(FILE_ROOT_DIR);
             baseThread.run();
         }
 

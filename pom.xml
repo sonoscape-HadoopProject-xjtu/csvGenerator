@@ -6,7 +6,7 @@
 
     <groupId>edu.xjtu.slst.bme</groupId>
     <artifactId>csvGenerator</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
 
     <name>csvGenerator</name>
     <url>https://www.msopopop.cn</url>
@@ -67,7 +67,6 @@
             <artifactId>javacsv</artifactId>
             <version>2.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
@@ -84,7 +83,7 @@
                 <!-- JUnit 5 requires Surefire version 2.22.1 or higher -->
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.1</version>
+                    <version>3.0.0-M3</version>
                 </plugin>
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
                 <plugin>

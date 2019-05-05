@@ -10,16 +10,29 @@ import java.util.Objects;
 
 public class BaseThread implements Runnable {
     private final static Logger logger = LogManager.getLogger(BaseThread.class);
-    private final static CSVWrite csv = new CSVWrite();
+    private volatile static CSVUtil csvUtil = new CSVUtil();
     private static String FILE_ROOT_DIR;
 
-    public void setFileRootDir(String fileRootDir) {
-        FILE_ROOT_DIR = fileRootDir;
-
+    /**
+     * Set location storage csv file.
+     *
+     * @param csvFileDir CSV_FILE_DIR.
+     */
+    public static void setCsvFileDir(String csvFileDir) {
+        csvUtil.setFilePath(csvFileDir);
     }
 
     /**
-     * Get all file names from FILE_ROOT_DIR
+     * Set File Dir.
+     *
+     * @param fileRootDir FILE_ROOT_DIR.
+     */
+    public static void setFileRootDir(String fileRootDir) {
+        FILE_ROOT_DIR = fileRootDir;
+    }
+
+    /**
+     * Get all file names from FILE_ROOT_DIR and save csv file to CSV_FILE_DIR
      */
     @Override
     public void run() {
@@ -45,9 +58,7 @@ public class BaseThread implements Runnable {
                 }
             }
         }
-        csv.setFilePath(FILE_ROOT_DIR);
-            csv.writeCSV(parameterList);
+            csvUtil.writeCSV(parameterList);
         }
-        logger.info(Thread.currentThread().getName() + " finished.");
     }
 }

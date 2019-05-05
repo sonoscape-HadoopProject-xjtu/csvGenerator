@@ -12,6 +12,10 @@ import java.io.File;
 class XMLParse {
     private final static Logger logger = LogManager.getLogger(XMLParse.class);
 
+    /**
+     * @param file File object.
+     * @return A parameter object that includes information we need.
+     */
     static Parameter parseParameters(File file) {
         try {
             Document document = new SAXReader().read(file);
