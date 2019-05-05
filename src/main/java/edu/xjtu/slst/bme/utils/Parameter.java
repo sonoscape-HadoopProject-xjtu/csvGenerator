@@ -7,10 +7,10 @@ class Parameter {
     private final static Logger logger = LogManager.getLogger(Parameter.class);
 
     private String fileName;
-    private int xmin;
-    private int xmax;
-    private int ymin;
-    private int ymax;
+    private String xmin;
+    private String xmax;
+    private String ymin;
+    private String ymax;
     private String className;
 
     String getClassName() {
@@ -29,35 +29,35 @@ class Parameter {
         this.fileName = fileName;
     }
 
-    int getXmin() {
+    String getXmin() {
         return xmin;
     }
 
-    void setXmin(int xmin) {
+    void setXmin(String xmin) {
         this.xmin = xmin;
     }
 
-    int getXmax() {
+    String getXmax() {
         return xmax;
     }
 
-    void setXmax(int xmax) {
+    void setXmax(String xmax) {
         this.xmax = xmax;
     }
 
-    int getYmin() {
+    String getYmin() {
         return ymin;
     }
 
-    void setYmin(int ymin) {
+    void setYmin(String ymin) {
         this.ymin = ymin;
     }
 
-    int getYmax() {
+    String getYmax() {
         return ymax;
     }
 
-    void setYmax(int ymax) {
+    void setYmax(String ymax) {
         this.ymax = ymax;
     }
 }

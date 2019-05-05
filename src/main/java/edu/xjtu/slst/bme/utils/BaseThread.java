@@ -42,7 +42,7 @@ public class BaseThread implements Runnable {
             }
         }
         csv.setFilePath(FILE_ROOT_DIR);
-        csv.writeCSV(parameterList);
+        csv.writeCSV(parameterList, ".csv");
     }
 
     public synchronized void close() throws IOException {

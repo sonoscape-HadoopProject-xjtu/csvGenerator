@@ -21,22 +21,22 @@ class CSVWrite {
         filePath = FilePath;
     }
 
-    void writeCSV(List<Parameter> parameterList) {
+    void writeCSV(List<Parameter> parameterList, String fileName) {
         CSVFormat format = CSVFormat.DEFAULT;
         try {
-            out = new FileWriter(filePath);
+            out = new FileWriter(filePath + fileName);
             printer = new CSVPrinter(out, format);
             for (Parameter parameter : parameterList) {
                 List<String> records = new ArrayList<>();
                 records.add(parameter.getFileName());
-                records.add(Integer.toString(parameter.getXmin()));
-                records.add(Integer.toString(parameter.getXmax()));
-                records.add(Integer.toString(parameter.getYmin()));
-                records.add(Integer.toString(parameter.getYmax()));
+                records.add(parameter.getXmin());
+                records.add(parameter.getXmax());
+                records.add(parameter.getYmin());
+                records.add(parameter.getYmax());
                 records.add(parameter.getClassName());
                 printer.printRecord(records);
             }
-            logger.info("Successfully write csv file.");
+            logger.info("Successfully write csv file: " + filePath + fileName);
         } catch (IOException e) {
             logger.error(e.toString());
             System.exit(-1);

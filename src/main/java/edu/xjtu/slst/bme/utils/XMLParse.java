@@ -12,33 +12,28 @@ import java.io.File;
 class XMLParse {
     private final static Logger logger = LogManager.getLogger(XMLParse.class);
 
-    @org.jetbrains.annotations.Nullable
     static Parameter parseParameters(File file) {
         try {
             Document document = new SAXReader().read(file);
             Parameter parameter = new Parameter();
 
             Element rootElement = document.getRootElement();
-            parameter.setFileName(file.getPath());
+
+            parameter.setFileName(file.getPath().
+                    substring(0,
+                            file.getPath().lastIndexOf(".")) + ".jpg");
 
             Element object = rootElement.element("object");
             parameter.setClassName(object.element("name").getText());
 
             Element bndBox = object.element("bndbox");
 
-            parameter.setXmin(Integer.getInteger(
-                    bndBox.element("xmin").getText()
-            ));
-            parameter.setYmin(Integer.getInteger(
-                    bndBox.element("ymin").getText()
-            ));
-            parameter.setXmax(Integer.getInteger(
-                    bndBox.element("xmax").getText()
-            ));
-            parameter.setYmax(Integer.getInteger(
-                    bndBox.element("ymax").getText()
-            ));
-            logger.info("Successfully parse XML file: " + file.getName() + ".");
+            parameter.setXmin(bndBox.element("xmin").getText());
+            parameter.setYmin(bndBox.element("ymin").getText());
+            parameter.setXmax(bndBox.element("xmax").getText());
+            parameter.setYmax(bndBox.element("ymax").getText());
+
+            logger.trace("Successfully parse XML file: " + file.getName() + ".");
             return parameter;
         } catch (IllegalArgumentException | DocumentException e) {
             logger.fatal(e.toString());
