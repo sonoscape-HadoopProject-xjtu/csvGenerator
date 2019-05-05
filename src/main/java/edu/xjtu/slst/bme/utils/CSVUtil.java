@@ -21,7 +21,7 @@ class CSVUtil {
     /**
      * @param parameterList parameter List. See Parameter.java for more information.
      */
-    synchronized void writeCSV(List<Parameter> parameterList) {
+    synchronized void writeCSV(List<Parameter> parameterList) throws IllegalArgumentException {
         File file = new File(csvFilePath);
         CsvWriter csvWriter;
         try {

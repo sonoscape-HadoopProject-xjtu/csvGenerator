@@ -1,10 +1,6 @@
 package edu.xjtu.slst.bme.utils;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 class Parameter {
-    private final static Logger logger = LogManager.getLogger(Parameter.class);
 
     private String fileName;
     private String xmin;
@@ -13,7 +9,8 @@ class Parameter {
     private String ymax;
     private String className;
 
-    String getClassName() {
+    String getClassName() throws IllegalArgumentException {
+        if (className == null) throw new IllegalArgumentException("Class name undefined.");
         return className;
     }
 
@@ -21,7 +18,8 @@ class Parameter {
         this.className = className;
     }
 
-    String getFileName() {
+    String getFileName() throws IllegalArgumentException {
+        if (fileName == null) throw new IllegalArgumentException("Filename undefined.");
         return fileName;
     }
 
@@ -29,7 +27,8 @@ class Parameter {
         this.fileName = fileName;
     }
 
-    String getXmin() {
+    String getXmin() throws IllegalArgumentException {
+        if (xmin == null) throw new IllegalArgumentException("X-min value undefined.");
         return xmin;
     }
 
@@ -37,7 +36,8 @@ class Parameter {
         this.xmin = xmin;
     }
 
-    String getXmax() {
+    String getXmax() throws IllegalArgumentException {
+        if (xmax == null) throw new IllegalArgumentException("X-max value undefined.");
         return xmax;
     }
 
@@ -45,7 +45,8 @@ class Parameter {
         this.xmax = xmax;
     }
 
-    String getYmin() {
+    String getYmin() throws IllegalArgumentException {
+        if (ymin == null) throw new IllegalArgumentException("Y-min value undefined.");
         return ymin;
     }
 
@@ -53,7 +54,8 @@ class Parameter {
         this.ymin = ymin;
     }
 
-    String getYmax() {
+    String getYmax() throws IllegalArgumentException {
+        if (ymax == null) throw new IllegalArgumentException("Y-max value undefined.");
         return ymax;
     }
 

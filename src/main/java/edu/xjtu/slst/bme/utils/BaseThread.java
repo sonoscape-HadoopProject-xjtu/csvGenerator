@@ -9,9 +9,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class BaseThread implements Runnable {
+    private Thread t;
     private final static Logger logger = LogManager.getLogger(BaseThread.class);
     private volatile static CSVUtil csvUtil = new CSVUtil();
-    private static String FILE_ROOT_DIR;
+    private String FILE_ROOT_DIR;
 
     /**
      * Set location storage csv file.
@@ -27,7 +28,7 @@ public class BaseThread implements Runnable {
      *
      * @param fileRootDir FILE_ROOT_DIR.
      */
-    public static void setFileRootDir(String fileRootDir) {
+    public void setFileRootDir(String fileRootDir) {
         FILE_ROOT_DIR = fileRootDir;
     }
 
@@ -36,29 +37,45 @@ public class BaseThread implements Runnable {
      */
     @Override
     public void run() {
-        logger.info(Thread.currentThread().getName() + " is already running.");
+        // If there is no file in the folder, interrupt the thread and exit.
         if (FILE_ROOT_DIR.isEmpty()) {
-            logger.error("File dir have not been set yet. Process exit.");
-            Thread.currentThread().interrupt();
+            t.interrupt();
+            throw new IllegalArgumentException("File dir have not been set yet. Process exit.");
         } else {
-        File[] files = new File(FILE_ROOT_DIR).listFiles();
-        List<Parameter> parameterList = new ArrayList<>();
-        // Get all file information and parse XML Files.
-        assert files != null;
-        for (File file : files) {
-            String fileName = file.getName();
-            String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-            if (Objects.equals(suffix, "xml")) {
-                Parameter parameter = XMLParse.parseParameters(file);
-                if (parameter != null)
-                    parameterList.add(parameter);
-                else {
-                    logger.fatal("Empty parameter detected. Maybe XMLParse class did not work properly.");
-                    System.exit(-1);
+            File[] files = new File(FILE_ROOT_DIR).listFiles();
+            List<Parameter> parameterList = new ArrayList<>();
+
+            // Get all file information and parse XML Files.
+            if (files == null) throw new NullPointerException("Empty folder.");
+
+            // Parse every XML file.
+            for (File file : files) {
+                String fileName = file.getName();
+                String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+                if (Objects.equals(suffix, "xml")) {
+                    Parameter parameter = XMLParse.parseParameters(file);
+                    if (parameter != null)
+                        parameterList.add(parameter);
+                    else
+                        throw new NullPointerException("Empty parameter detected. Maybe XMLParse class did not work properly.");
                 }
             }
+
+            // Write CSV Files.
+            try {
+                csvUtil.writeCSV(parameterList);
+            } catch (IllegalArgumentException e) {
+                logger.fatal(e.toString());
+                t.interrupt();
+            }
         }
-            csvUtil.writeCSV(parameterList);
+    }
+
+    public void start() {
+        if (t == null) {
+            t = new Thread(this, FILE_ROOT_DIR);
+            t.start();
         }
     }
 }

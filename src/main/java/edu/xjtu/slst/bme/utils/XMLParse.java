@@ -37,7 +37,6 @@ class XMLParse {
             parameter.setXmax(bndBox.element("xmax").getText());
             parameter.setYmax(bndBox.element("ymax").getText());
 
-            logger.trace("Successfully parse XML file: " + file.getName() + ".");
             return parameter;
         } catch (IllegalArgumentException | DocumentException e) {
             logger.fatal(e.toString());
